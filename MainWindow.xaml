@@ -1,0 +1,24 @@
+﻿<Window x:Class="DailyNote.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:DailyNote"
+        mc:Ignorable="d" Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded"
+        >
+    <Grid>
+        <DockPanel>
+            <TextBox DockPanel.Dock="Top" x:Name="txtWork" Height="65" />
+            <StackPanel DockPanel.Dock="Bottom">
+                <Button Content="新增记录" Height="50" Name="btnOK" Click="btnOK_Click" IsDefault="True" />
+                <Button Content="开始时间重置为当前时间" Height="50" Name="btnReset" Click="btnReset_Click"/>
+            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="日志:" Margin="5" />
+                <TextBox Grid.Row="1" AcceptsReturn="True" IsEnabled="False" Name="txtAllNote" />
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

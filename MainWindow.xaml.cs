@@ -35,6 +35,10 @@ namespace DailyNote
         }
         string filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
 
+        //保存程序配置
+        Config config = new Config();
+
+
         public MainWindow()
         {
             InitializeComponent();

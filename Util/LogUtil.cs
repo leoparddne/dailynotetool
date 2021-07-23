@@ -16,14 +16,26 @@ namespace DailyNote.Util
 
         DateTime lastTime;
 
+        string dir = "logs";
+
         string logFile
         {
             get
             {
-                return "dailynote_" + StartTimeOfDay.ToString("yyyyMMdd") + ".txt";
+                var targetPath = GetTargetPath();
+                return targetPath+"\\dailynote_" + StartTimeOfDay.ToString("yyyyMMdd") + ".txt";
             }
         }
+        private string GetTargetPath()
+        {
+            string targetDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dir);
+            if (!Directory.Exists(targetDir))
+            {
+                Directory.CreateDirectory(targetDir);
+            }
 
+            return targetDir;
+        }
         /// <summary>
         /// 日志记录集合
         /// </summary>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -65,6 +66,13 @@ namespace DailyNote.Util
         {
             //TODO
             StartTimeOfDay = firstTimeOfDay;
+            if (LogInfos.Count != 0)
+            {
+                //更新首条记录时间
+                LogInfos.First().StartTime = StartTimeOfDay;
+            }
+
+            Save();
         }
 
         public void Load()

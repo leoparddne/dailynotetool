@@ -92,7 +92,7 @@ namespace DailyNote
             }
 
             StartTime = DateTime.Now;
-
+            log.ReSet(StartTime);
 
             txtAllNote.Text = log.GetDailyNotes();
         }
@@ -111,6 +111,7 @@ namespace DailyNote
 
             //重置时间
             StartTime = new DateTime(data.Year, data.Month, data.Day, hour, minute, 0);
+            log.ReSet(StartTime);
 
             //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
 

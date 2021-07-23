@@ -45,21 +45,8 @@ namespace DailyNote
         public MainWindow()
         {
             InitializeComponent();
-            InjectData();
             StartTime = LastTime = DateTime.Now;
         }
-        private void InjectData()
-        {
-            for (int i = 0; i < 24; i++)
-            {
-                cobHour.Items.Add(i);
-            }
-            for (int i = 0; i < 60; i++)
-            {
-                cobMinute.Items.Add(i);
-            }
-        }
-
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -80,6 +67,7 @@ namespace DailyNote
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            timePicker.SelectedTime = StartTime;
             txtAllNote.Text = log.GetDailyNotes();
         }
 
@@ -104,13 +92,10 @@ namespace DailyNote
                 return;
             }
             var data = DateTime.Now;
-            int hour;
-            int minute;
-            int.TryParse(cobHour.SelectedItem.ToString(), out hour);
-            int.TryParse(cobHour.SelectedItem.ToString(), out minute);
 
             //重置时间
-            StartTime = new DateTime(data.Year, data.Month, data.Day, hour, minute, 0);
+            StartTime = new DateTime(data.Year, data.Month, data.Day,
+                timePicker.SelectedTime.Value.Hour, timePicker.SelectedTime.Value.Minute, timePicker.SelectedTime.Value.Second);
             log.ReSet(StartTime);
 
             //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";

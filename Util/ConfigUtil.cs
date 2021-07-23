@@ -56,6 +56,13 @@ namespace DailyNote.Util
             File.WriteAllText(configFile, JsonConvert.SerializeObject(configs));
             return result;
         }
+        public void Modify(Config config, DateTime day)
+        {
+            Backup();
+            config.Set(day);
+
+            File.WriteAllText(configFile, JsonConvert.SerializeObject(configs));
+        }
 
         public void Backup()
         {
@@ -63,7 +70,7 @@ namespace DailyNote.Util
             {
                 return;
             }
-            File.Move(configFile, GetTargetPath()+ $"\\{configs.First().Key}_{configs.Last().Key}.cfg");
+            File.Move(configFile, GetTargetPath() + $"\\{configs.First().Key}_{configs.Last().Key}.cfg");
             configs = new();
         }
 

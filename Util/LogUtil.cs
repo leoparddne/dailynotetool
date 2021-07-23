@@ -1,4 +1,5 @@
 ﻿using DailyNote.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +27,26 @@ namespace DailyNote.Util
                 return targetPath + "\\dailynote_" + StartTimeOfDay.ToString("yyyyMMdd") + ".txt";
             }
         }
+        //原始数据
+        string logDataFile
+        {
+            get
+            {
+                var targetPath = GetTargetPath();
+                return targetPath + "\\dailynote_" + StartTimeOfDay.ToString("yyyyMMdd") + ".dat";
+            }
+        }
+
+        public string Title
+        {
+            get
+            {
+                var title = $"日报工具-上次更新时间{lastTime.ToShortTimeString()}-上班时间{StartTimeOfDay.ToShortTimeString()}";
+
+                return title;
+            }
+        }
+
         private string GetTargetPath()
         {
             string targetDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dir);
@@ -47,6 +68,11 @@ namespace DailyNote.Util
         {
             //初始化加载旧数据
             Load();
+        }
+
+        public DateTime GetStartTime()
+        {
+            return StartTimeOfDay;
         }
         public string AddLog(string log)
         {
@@ -70,6 +96,8 @@ namespace DailyNote.Util
 
             writer.Close();
             lastTime = logInfo.EndTime;
+
+            SaveRawData();
 
             return lineStr;
         }
@@ -98,7 +126,7 @@ namespace DailyNote.Util
             var config = configUtile.GetConfigOfDay(StartTimeOfDay);
             if (config != null)
             {
-                config.StartTime = StartTimeOfDay;
+                configUtile.Modify(config, firstTimeOfDay);
             }
             Save();
 
@@ -113,6 +141,7 @@ namespace DailyNote.Util
             //获取当日上班时间
             Config config = GetConfigOfDay();
 
+            StartTimeOfDay = config.StartTime;
             LoadLog(config);
         }
 
@@ -122,31 +151,36 @@ namespace DailyNote.Util
         /// <param name="config"></param>
         private void LoadLog(Config config)
         {
-            DateTime tmpTime = config.StartTime;
-
-
-            FileInfo file = new FileInfo(logFile);
+            FileInfo file = new FileInfo(logDataFile);
 
             if (!file.Exists)
             {
                 return;
             }
-            foreach (var line in File.ReadAllLines(logFile))
+            var strData = File.ReadAllText(logDataFile);
+            if (strData == null || strData.Trim() == string.Empty)
             {
-                var data = line.Split(" ");
-                var log = data[0];
-                var timeDurStr = data[1].Replace(EndStr, "");
-                double timeDur;
-                double.TryParse(timeDurStr, out timeDur);
-                var endTime = tmpTime.AddHours(timeDur);
-                LogInfos.Add(new LogInfoModel
-                {
-                    Log = log,
-                    StartTime = tmpTime,
-                    EndTime = endTime
-                });
-                lastTime = endTime;
+                return;
             }
+
+            LogInfos = JsonConvert.DeserializeObject<List<LogInfoModel>>(strData);
+            lastTime = LogInfos.Last().EndTime;
+            //foreach (var line in File.ReadAllLines(logFile))
+            //{
+            //    var data = line.Split(" ");
+            //    var log = data[0];
+            //    var timeDurStr = data[1].Replace(EndStr, "");
+            //    double timeDur;
+            //    double.TryParse(timeDurStr, out timeDur);
+            //    var endTime = tmpTime.AddHours(timeDur);
+            //    LogInfos.Add(new LogInfoModel
+            //    {
+            //        Log = log,
+            //        StartTime = tmpTime,
+            //        EndTime = endTime
+            //    });
+            //    lastTime = endTime;
+            //}
         }
 
         private Config GetConfigOfDay()
@@ -162,6 +196,10 @@ namespace DailyNote.Util
 
         public void Save()
         {
+            if ((LogInfos?.Count ?? 0) == 0)
+            {
+                return;
+            }
             StringBuilder builder = new StringBuilder();
 
             foreach (var item in LogInfos)
@@ -170,6 +208,16 @@ namespace DailyNote.Util
             }
 
             File.WriteAllText(logFile, builder.ToString());
+            SaveRawData();
+        }
+
+        private void SaveRawData()
+        {
+            if ((LogInfos?.Count ?? 0) == 0)
+            {
+                return;
+            }
+            File.WriteAllText(logDataFile, JsonConvert.SerializeObject(LogInfos));
         }
 
         private string GetLogLine(LogInfoModel logInfo)

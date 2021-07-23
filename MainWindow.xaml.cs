@@ -12,17 +12,6 @@ namespace DailyNote
     /// </summary>
     public partial class MainWindow : Window
     {
-        DateTime startTime;
-        //每日开始时间
-        DateTime StartTime
-        {
-            get => startTime;
-            set
-            {
-                startTime = value;
-                SyncTitle();
-            }
-        }
         DateTime lastTime;
         //开始时间
         DateTime LastTime
@@ -40,12 +29,12 @@ namespace DailyNote
 
         public void SyncTitle()
         {
-            this.Title = $"日报工具-上次更新时间{LastTime.ToShortTimeString()}-上班时间{startTime.ToShortTimeString()}";
+            this.Title = log.Title;
         }
         public MainWindow()
         {
             InitializeComponent();
-            StartTime = LastTime = DateTime.Now;
+            LastTime = DateTime.Now;
         }
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
@@ -67,7 +56,7 @@ namespace DailyNote
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            timePicker.SelectedTime = StartTime;
+            timePicker.SelectedTime = log.GetStartTime();
             txtAllNote.Text = log.GetDailyNotes();
         }
 
@@ -79,8 +68,8 @@ namespace DailyNote
                 return;
             }
 
-            StartTime = DateTime.Now;
-            log.ReSet(StartTime);
+            log.ReSet( DateTime.Now);
+            SyncTitle();
 
             txtAllNote.Text = log.GetDailyNotes();
         }
@@ -94,9 +83,10 @@ namespace DailyNote
             var data = DateTime.Now;
 
             //重置时间
-            StartTime = new DateTime(data.Year, data.Month, data.Day,
+            var StartTime = new DateTime(data.Year, data.Month, data.Day,
                 timePicker.SelectedTime.Value.Hour, timePicker.SelectedTime.Value.Minute, timePicker.SelectedTime.Value.Second);
             log.ReSet(StartTime);
+            SyncTitle();
 
             //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
 

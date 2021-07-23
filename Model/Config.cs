@@ -17,10 +17,14 @@ namespace DailyNote
 
         public Config(DateTime StartTime)
         {
+            Set(StartTime);
+        }
+
+        public void Set(DateTime StartTime)
+        {
             this.StartTime = StartTime;
             GenKey();
         }
-
         public void GenKey()
         {
             Key = StartTime.ToString("yyyyMMdd");

@@ -23,7 +23,7 @@ namespace DailyNote.Util
             get
             {
                 var targetPath = GetTargetPath();
-                return targetPath+"\\dailynote_" + StartTimeOfDay.ToString("yyyyMMdd") + ".txt";
+                return targetPath + "\\dailynote_" + StartTimeOfDay.ToString("yyyyMMdd") + ".txt";
             }
         }
         private string GetTargetPath()
@@ -76,6 +76,11 @@ namespace DailyNote.Util
 
         public void ReSet(DateTime firstTimeOfDay)
         {
+            if (firstTimeOfDay > DateTime.Now)
+            {
+                MessageBox.Show($"开始时间不得大于当前系统时间");
+                return;
+            }
             //TODO
             if (LogInfos.Count != 0)
             {
@@ -86,12 +91,19 @@ namespace DailyNote.Util
                     return;
                 }
                 //更新首条记录时间
-                firstData.StartTime = StartTimeOfDay;
+                LogInfos.First().StartTime = firstTimeOfDay;
             }
 
             StartTimeOfDay = firstTimeOfDay;
-
+            var config = configUtile.GetConfigOfDay(StartTimeOfDay);
+            if (config != null)
+            {
+                config.StartTime = StartTimeOfDay;
+            }
             Save();
+
+            //LogInfos.Clear();
+            //Load();
         }
 
         public void Load()

@@ -43,6 +43,7 @@ namespace DailyNote
         {
             timePicker.SelectedTime = log.GetStartTime();
             txtAllNote.Text = log.GetDailyNotes();
+            SyncTitle();
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)

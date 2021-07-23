@@ -10,11 +10,11 @@ namespace DailyNote
     {
         public DateTime StartTime { get; set; } = DateTime.Now;
 
-        string configFile
+        public string configFile
         {
             get
             {
-                return "dailynote_" + StartTime.ToString("yyyyMMdd");
+                return "dailynote_" + StartTime.ToString("yyyyMM");
             }
         }
 

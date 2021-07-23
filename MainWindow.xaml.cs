@@ -23,10 +23,8 @@ namespace DailyNote
             {
                 lastTime = value;
                 this.Title = $"日报工具-上次更新时间{value.ToShortTimeString()}";
-                filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
             }
         }
-        string filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
 
         //保存程序配置
         Config config = new Config();
@@ -55,55 +53,25 @@ namespace DailyNote
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            var appendText = txtWork.Text.Trim();
-            log.AddLog(appendText);
-            //添加新日志数据
-            if (appendText != null && appendText != string.Empty)
-            {
-                FileInfo resultFile = new FileInfo(filePath);
-
-                var text = resultFile.AppendText();
-                var timeSpan = DateTime.Now - LastTime;
-                var time = Math.Round(timeSpan.TotalHours, 1);
-                if (time == 0)
-                {
-                    time = 0.1;
-                }
-                text.WriteLine($"{appendText} {time}H");
-
-                text.Close();
-
-                LastTime = DateTime.Now;
-            }
-
-            if (!File.Exists(filePath))
-            {
-                return;
-            }
-            //有日志文件,读取复制到剪贴板
-            txtAllNote.Text = File.ReadAllText(filePath);
-
             try
             {
-                Clipboard.SetText(txtAllNote.Text);
+                var appendText = txtWork.Text.Trim();
+                var logStr=log.AddLog(appendText);
+                LastTime = DateTime.Now;
+                txtAllNote.AppendText($"{logStr}\n");
+                //清空数据
+                txtWork.Text = "";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("打开剪贴板失败" + ex.Message);
-                return;
+                MessageBox.Show(ex.Message);
             }
 
-            //清空数据
-            txtWork.Text = "";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(filePath))
-            {
-                txtAllNote.Text = File.ReadAllText(filePath);
-
-            }
+            txtAllNote.Text = log.GetDailyNotes();
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
@@ -116,17 +84,8 @@ namespace DailyNote
 
             startTime = LastTime = DateTime.Now;
 
-            //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
 
-            if (File.Exists(filePath))
-            {
-                txtAllNote.Text = File.ReadAllText(filePath);
-            }
-            else
-            {
-                txtAllNote.Text = "";
-                return;
-            }
+            txtAllNote.Text = log.GetDailyNotes();
         }
         private void btnResetFromSelectTime_Click(object sender, RoutedEventArgs e)
         {
@@ -146,25 +105,17 @@ namespace DailyNote
 
             //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
 
-            if (File.Exists(filePath))
-            {
-                txtAllNote.Text = File.ReadAllText(filePath);
-            }
-            else
-            {
-                txtAllNote.Text = "";
-                return;
-            }
+            txtAllNote.Text = log.GetDailyNotes();
         }
 
         private void txtAllNote_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             //有日志文件,读取复制到剪贴板
-            txtAllNote.Text = File.ReadAllText(filePath);
+            txtAllNote.Text = log.GetDailyNotes();
 
             try
             {
-                Clipboard.SetText(txtAllNote.Text);
+                log.Copy2Clipboard();
             }
             catch (Exception ex)
             {

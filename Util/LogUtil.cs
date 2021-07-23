@@ -19,7 +19,7 @@ namespace DailyNote.Util
         {
             get
             {
-                return "dailynote_test" + StartTimeOfDay.ToString("yyyyMMdd" )+ ".txt";
+                return "dailynote_" + StartTimeOfDay.ToString("yyyyMMdd" )+ ".txt";
             }
         }
 
@@ -28,8 +28,12 @@ namespace DailyNote.Util
         /// </summary>
         public List<LogInfoModel> LogInfos { get; set; } = new List<LogInfoModel>();
 
-
-        public void AddLog(string log)
+        public LogUtil()
+        {
+            //初始化加载旧数据
+            Load();
+        }
+        public string AddLog(string log)
         {
             if (LogInfos.Count == 0)
             {
@@ -45,10 +49,13 @@ namespace DailyNote.Util
 
             FileInfo file = new FileInfo(logFile);
             var writer = file.AppendText();
-            writer.WriteLine(GetLogLine(logInfo));
+            string lineStr = GetLogLine(logInfo);
+            writer.WriteLine(lineStr);
 
             writer.Close();
             lastTime = logInfo.EndTime;
+
+            return lineStr;
         }
 
         public void ReSet(DateTime firstTimeOfDay)
@@ -106,24 +113,33 @@ namespace DailyNote.Util
             return result;
         }
 
-        public void Copy()
+        public void Copy2Clipboard()
+        {
+            try
+            {
+                Clipboard.SetText(GetDailyNotes());
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"获取剪贴板失败,{e.Message},可直接打开文件:{logFile}");
+            }
+        }
+
+        /// <summary>
+        /// 获取日志信息
+        /// </summary>
+        /// <returns></returns>
+        public string GetDailyNotes()
         {
             FileInfo file = new FileInfo(logFile);
 
             if (!file.Exists)
             {
-                return;
+                return "";
             }
 
             var info = File.ReadAllText(logFile);
-            try
-            {
-                Clipboard.SetText(info);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"获取剪贴板失败,可直接打开文件:{logFile}");
-            }
+            return info;
         }
     }
 }

@@ -65,12 +65,19 @@ namespace DailyNote.Util
         public void ReSet(DateTime firstTimeOfDay)
         {
             //TODO
-            StartTimeOfDay = firstTimeOfDay;
             if (LogInfos.Count != 0)
             {
+                var firstData = LogInfos.First();
+                if (firstTimeOfDay < firstData.EndTime)
+                {
+                    MessageBox.Show($"开始时间不得大于第一条记录的结束时间,结束时间为{firstData.EndTime.ToShortTimeString()}");
+                    return;
+                }
                 //更新首条记录时间
-                LogInfos.First().StartTime = StartTimeOfDay;
+                firstData.StartTime = StartTimeOfDay;
             }
+
+            StartTimeOfDay = firstTimeOfDay;
 
             Save();
         }

@@ -81,6 +81,11 @@ namespace DailyNote
 
         private void clipCopy(object sender, MouseButtonEventArgs e)
         {
+            Copy();
+        }
+
+        private void Copy()
+        {
             //有日志文件,读取复制到剪贴板
             txtAllNote.Text = log.GetDailyNotes();
 
@@ -93,6 +98,11 @@ namespace DailyNote
                 MessageBox.Show("打开剪贴板失败" + ex.Message);
                 return;
             }
+        }
+
+        private void txtCopy_Click(object sender, RoutedEventArgs e)
+        {
+            Copy();
         }
     }
 }

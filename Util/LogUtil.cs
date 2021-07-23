@@ -231,7 +231,10 @@ namespace DailyNote.Util
         {
             try
             {
-                Clipboard.SetText(GetDailyNotes());
+                string hours = $"总时长 {GetTotalHours()}H\n";
+
+                var copyText = $"{hours}{GetDailyNotes()}";
+                Clipboard.SetText(copyText);
             }
             catch (Exception e)
             {
@@ -239,6 +242,17 @@ namespace DailyNote.Util
             }
         }
 
+        public double GetTotalHours()
+        {
+            if ((LogInfos?.Count ?? 0) == 0)
+            {
+                return 0;
+            }
+            var hours = (LogInfos.Last().EndTime - LogInfos.First().StartTime).TotalHours;
+
+            var result = Math.Round(hours, 1);
+            return result;
+        }
         /// <summary>
         /// 获取日志信息
         /// </summary>

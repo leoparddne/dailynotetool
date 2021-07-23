@@ -26,8 +26,10 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="日志:(点击此处复制)" Foreground="Red" Margin="5" MouseLeftButtonDown="clipCopy" />
-                <TextBox Grid.Row="1" AcceptsReturn="True" IsEnabled="True" Name="txtAllNote">
+                <TextBlock Text="日志:(点击此处复制或在生成的日志数据框中右键复制)" Foreground="Red" Margin="5" MouseLeftButtonDown="clipCopy" />
+                <TextBox Grid.Row="1" AcceptsReturn="True" IsEnabled="False"
+                         ContextMenuService.ShowOnDisabled="True"
+                        Name="txtAllNote">
                     <TextBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="复制" Name="txtCopy" Click="txtCopy_Click"/>

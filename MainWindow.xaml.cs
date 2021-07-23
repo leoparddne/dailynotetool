@@ -35,9 +35,6 @@ namespace DailyNote
             }
         }
 
-        //保存程序配置
-        Config config = new Config();
-
 
         LogUtil log = new LogUtil();
 

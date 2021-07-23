@@ -19,7 +19,7 @@ namespace DailyNote.Util
         {
             get
             {
-                return "dailynote_" + StartTimeOfDay.ToString("yyyyMMdd" )+ ".txt";
+                return "dailynote_" + StartTimeOfDay.ToString("yyyyMMdd") + ".txt";
             }
         }
 
@@ -27,6 +27,8 @@ namespace DailyNote.Util
         /// 日志记录集合
         /// </summary>
         public List<LogInfoModel> LogInfos { get; set; } = new List<LogInfoModel>();
+
+        private ConfigUtil configUtile = new ConfigUtil();
 
         public LogUtil()
         {
@@ -39,6 +41,7 @@ namespace DailyNote.Util
             {
                 lastTime = StartTimeOfDay;
             }
+
             var logInfo = new LogInfoModel
             {
                 StartTime = lastTime,
@@ -67,15 +70,28 @@ namespace DailyNote.Util
         public void Load()
         {
             LogInfos.Clear();
+
+            //获取当日上班时间
+            Config config = GetConfigOfDay();
+
+            LoadLog(config);
+        }
+
+        /// <summary>
+        /// 加载之前的日志数据(当日)
+        /// </summary>
+        /// <param name="config"></param>
+        private void LoadLog(Config config)
+        {
+            DateTime tmpTime = config.StartTime;
+
+
             FileInfo file = new FileInfo(logFile);
 
             if (!file.Exists)
             {
                 return;
             }
-
-            DateTime tmpTime = StartTimeOfDay;
-
             foreach (var line in File.ReadAllLines(logFile))
             {
                 var data = line.Split(" ");
@@ -89,8 +105,20 @@ namespace DailyNote.Util
                     Log = log,
                     StartTime = tmpTime,
                     EndTime = endTime
-                }); ;
+                });
+                lastTime = endTime;
             }
+        }
+
+        private Config GetConfigOfDay()
+        {
+            var config = configUtile.GetConfigOfDay(StartTimeOfDay);
+            if (config == null)
+            {
+                config = configUtile.Add(StartTimeOfDay);
+            }
+
+            return config;
         }
 
         public void Save()

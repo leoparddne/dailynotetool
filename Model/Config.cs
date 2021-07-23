@@ -8,19 +8,22 @@ namespace DailyNote
 {
     public class Config
     {
-        public DateTime StartTime { get; set; } = DateTime.Now;
+        public string Key { get; set; }
 
-        public string configFile
+        /// <summary>
+        /// 当日上班时间
+        /// </summary>
+        public DateTime StartTime { get; set; }
+
+        public Config(DateTime StartTime)
         {
-            get
-            {
-                return "dailynote_" + StartTime.ToString("yyyyMM");
-            }
+            this.StartTime = StartTime;
+            GenKey();
         }
 
-        public Config()
+        public void GenKey()
         {
-            //初始化配置
+            Key = StartTime.ToString("yyyyMMdd");
         }
     }
 }

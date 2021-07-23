@@ -6,15 +6,32 @@
         xmlns:Metro="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin" mc:Ignorable="d" Title="日志工具"
         Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        <DockPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--<Menu x:Name="menu" Height="23" VerticalAlignment="Top"  Margin="0 0 0 10">
+            <MenuItem Header="配置">
+                <MenuItem Header="_New..." IsCheckable="True" />
+                <MenuItem Header="_Open..." InputGestureText="ctrl+o" />
+                <Separator />
+                <MenuItem Header="Sen_d To">
+                    <MenuItem Header="Mail Recipient" />
+                    <MenuItem Header="My Documents" />
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Edit"></MenuItem>
+            <MenuItem Header="帮助"></MenuItem>
+        </Menu>-->
+        <DockPanel Grid.Row="1">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="当日工作开始时间:" VerticalAlignment="Center" />
                     <Metro:AduTimePicker BorderBrush="Transparent" Width="200" Margin="20 0 0 0"
-                            Name="timePicker"/>
+                            Name="timePicker" />
                     
                     <Button Click="btnResetFromSelectTime_Click" Width="200" Height="30" Content="重置开始时间" />
-                    <Button Content="开始时间重置为系统时间" Width="200" Height="30" Name="btnReset" Click="btnReset_Click" />
+                    <Button Content="开始时间重置为系统时间" Margin="10 0" Width="200" Height="30" Name="btnReset" Click="btnReset_Click" />
                 </StackPanel>
                 <TextBox x:Name="txtWork" Height="65" ToolTip="请输入工作事项" />
             </StackPanel>

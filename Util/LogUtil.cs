@@ -142,8 +142,7 @@ namespace DailyNote.Util
 
             foreach (var item in LogInfos)
             {
-                var showHour = Math.Round(item.Hours, 1);
-                builder.Append($"{item.Log}{blandStr}{showHour}\n");
+                builder.Append($"{GetLogLine(item)}\n");
             }
 
             File.WriteAllText(logFile, builder.ToString());

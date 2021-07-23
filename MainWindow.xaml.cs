@@ -12,8 +12,17 @@ namespace DailyNote
     /// </summary>
     public partial class MainWindow : Window
     {
-        //每日开始时间
         DateTime startTime;
+        //每日开始时间
+        DateTime StartTime
+        {
+            get => startTime;
+            set
+            {
+                startTime = value;
+                SyncTitle();
+            }
+        }
         DateTime lastTime;
         //开始时间
         DateTime LastTime
@@ -22,7 +31,7 @@ namespace DailyNote
             set
             {
                 lastTime = value;
-                this.Title = $"日报工具-上次更新时间{value.ToShortTimeString()}";
+                SyncTitle();
             }
         }
 
@@ -32,12 +41,15 @@ namespace DailyNote
 
         LogUtil log = new LogUtil();
 
-
+        public void SyncTitle()
+        {
+            this.Title = $"日报工具-上次更新时间{LastTime.ToShortTimeString()}-上班时间{startTime.ToShortTimeString()}";
+        }
         public MainWindow()
         {
             InitializeComponent();
             InjectData();
-            startTime = LastTime = DateTime.Now;
+            StartTime = LastTime = DateTime.Now;
         }
         private void InjectData()
         {
@@ -56,7 +68,7 @@ namespace DailyNote
             try
             {
                 var appendText = txtWork.Text.Trim();
-                var logStr=log.AddLog(appendText);
+                var logStr = log.AddLog(appendText);
                 LastTime = DateTime.Now;
                 txtAllNote.AppendText($"{logStr}\n");
                 //清空数据
@@ -82,7 +94,7 @@ namespace DailyNote
                 return;
             }
 
-            startTime = LastTime = DateTime.Now;
+            StartTime = DateTime.Now;
 
 
             txtAllNote.Text = log.GetDailyNotes();
@@ -101,7 +113,7 @@ namespace DailyNote
             int.TryParse(cobHour.SelectedItem.ToString(), out minute);
 
             //重置时间
-            startTime = LastTime = new DateTime(data.Year, data.Month, data.Day, hour, minute, 0);
+            StartTime = new DateTime(data.Year, data.Month, data.Day, hour, minute, 0);
 
             //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
 

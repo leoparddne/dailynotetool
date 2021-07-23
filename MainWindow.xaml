@@ -13,13 +13,13 @@
                     <TextBlock Text=":" VerticalAlignment="Center"/>
                     <ComboBox Name="cobMinute" SelectedIndex="0" />
                     <Button Click="btnResetFromSelectTime_Click" Width="200" Height="30" Content="重置开始时间"/>
+                    <Button Content="开始时间重置为当前时间" Width="200" Height="30" Name="btnReset" Click="btnReset_Click" />
                 </StackPanel>
                 <TextBox  x:Name="txtWork" Height="65" />
 
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom">
                 <Button Content="新增记录" Height="50" Name="btnOK" Click="btnOK_Click" IsDefault="True" />
-                <Button Content="开始时间重置为当前时间" Height="50" Name="btnReset" Click="btnReset_Click"/>
             </StackPanel>
             <Grid>
                 <Grid.RowDefinitions>

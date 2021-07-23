@@ -10,9 +10,15 @@ namespace DailyNote
     {
         public DateTime StartTime { get; set; } = DateTime.Now;
 
+        string configFile
+        {
+            get
+            {
+                return "dailynote_" + StartTime.ToString("yyyyMMdd");
+            }
+        }
 
-
-        public  Config()
+        public Config()
         {
             //初始化配置
         }

@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DailyNote.Model;
+using DailyNote.Util;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DailyNote
 {
@@ -21,6 +12,8 @@ namespace DailyNote
     /// </summary>
     public partial class MainWindow : Window
     {
+        //每日开始时间
+        DateTime startTime;
         DateTime lastTime;
         //开始时间
         DateTime LastTime
@@ -39,10 +32,25 @@ namespace DailyNote
         Config config = new Config();
 
 
+        LogUtil log = new LogUtil();
+
+
         public MainWindow()
         {
             InitializeComponent();
-            LastTime = DateTime.Now;
+            InjectData();
+            startTime = LastTime = DateTime.Now;
+        }
+        private void InjectData()
+        {
+            for (int i = 0; i < 24; i++)
+            {
+                cobHour.Items.Add(i);
+            }
+            for (int i = 0; i < 60; i++)
+            {
+                cobMinute.Items.Add(i);
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -75,7 +83,15 @@ namespace DailyNote
             //有日志文件,读取复制到剪贴板
             txtAllNote.Text = File.ReadAllText(filePath);
 
-            Clipboard.SetText(txtAllNote.Text);
+            try
+            {
+                Clipboard.SetText(txtAllNote.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("打开剪贴板失败" + ex.Message);
+                return;
+            }
 
             //清空数据
             txtWork.Text = "";
@@ -93,25 +109,67 @@ namespace DailyNote
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show("是否确认重置时间", "提示", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
+            if (result != MessageBoxResult.Yes)
             {
-                if (LastTime.Date == DateTime.Now.Date)
-                {
-                    return;
-                }
-                LastTime = DateTime.Now;
+                return;
+            }
 
-                //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
+            startTime = LastTime = DateTime.Now;
 
-                if (File.Exists(filePath))
-                {
-                    txtAllNote.Text = File.ReadAllText(filePath);
-                }
-                else
-                {
-                    txtAllNote.Text = "";
-                    return;
-                }
+            //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
+
+            if (File.Exists(filePath))
+            {
+                txtAllNote.Text = File.ReadAllText(filePath);
+            }
+            else
+            {
+                txtAllNote.Text = "";
+                return;
+            }
+        }
+        private void btnResetFromSelectTime_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("是否确认重置时间", "提示", MessageBoxButton.YesNo);
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+            var data = DateTime.Now;
+            int hour;
+            int minute;
+            int.TryParse(cobHour.SelectedItem.ToString(), out hour);
+            int.TryParse(cobHour.SelectedItem.ToString(), out minute);
+
+            //重置时间
+            startTime = LastTime = new DateTime(data.Year, data.Month, data.Day, hour, minute, 0);
+
+            //filePath = $"dailynote_{DateTime.Now.ToString("yyyyMMdd")}.txt";
+
+            if (File.Exists(filePath))
+            {
+                txtAllNote.Text = File.ReadAllText(filePath);
+            }
+            else
+            {
+                txtAllNote.Text = "";
+                return;
+            }
+        }
+
+        private void txtAllNote_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //有日志文件,读取复制到剪贴板
+            txtAllNote.Text = File.ReadAllText(filePath);
+
+            try
+            {
+                Clipboard.SetText(txtAllNote.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("打开剪贴板失败" + ex.Message);
+                return;
             }
         }
     }

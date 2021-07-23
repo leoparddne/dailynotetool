@@ -12,19 +12,6 @@ namespace DailyNote
     /// </summary>
     public partial class MainWindow : Window
     {
-        DateTime lastTime;
-        //开始时间
-        DateTime LastTime
-        {
-            get => lastTime;
-            set
-            {
-                lastTime = value;
-                SyncTitle();
-            }
-        }
-
-
         LogUtil log = new LogUtil();
 
         public void SyncTitle()
@@ -34,7 +21,6 @@ namespace DailyNote
         public MainWindow()
         {
             InitializeComponent();
-            LastTime = DateTime.Now;
         }
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
@@ -42,7 +28,6 @@ namespace DailyNote
             {
                 var appendText = txtWork.Text.Trim();
                 var logStr = log.AddLog(appendText);
-                LastTime = DateTime.Now;
                 txtAllNote.AppendText($"{logStr}\n");
                 //清空数据
                 txtWork.Text = "";

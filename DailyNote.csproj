@@ -8,8 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="daily.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AduSkin" Version="1.1.1.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="daily.ico" />
   </ItemGroup>
 
   <ItemGroup>

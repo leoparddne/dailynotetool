@@ -1,5 +1,6 @@
 ﻿using DailyNote.Model;
 using DailyNote.Util;
+using DailyNote.Windows;
 using System;
 using System.IO;
 using System.Windows;
@@ -54,7 +55,7 @@ namespace DailyNote
                 return;
             }
 
-            log.ReSet( DateTime.Now);
+            log.ReSet(DateTime.Now);
             SyncTitle();
 
             txtAllNote.Text = log.GetDailyNotes();
@@ -103,6 +104,11 @@ namespace DailyNote
         private void txtCopy_Click(object sender, RoutedEventArgs e)
         {
             Copy();
+        }
+
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            new AboutWindow().ShowDialog();
         }
     }
 }

@@ -10,19 +10,9 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!--<Menu x:Name="menu" Height="23" VerticalAlignment="Top"  Margin="0 0 0 10">
-            <MenuItem Header="配置">
-                <MenuItem Header="_New..." IsCheckable="True" />
-                <MenuItem Header="_Open..." InputGestureText="ctrl+o" />
-                <Separator />
-                <MenuItem Header="Sen_d To">
-                    <MenuItem Header="Mail Recipient" />
-                    <MenuItem Header="My Documents" />
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="_Edit"></MenuItem>
-            <MenuItem Header="帮助"></MenuItem>
-        </Menu>-->
+        <Menu x:Name="menu" Height="23" VerticalAlignment="Top"  Margin="0 0 0 10">
+            <MenuItem Header="帮助" Name="btnHelp"  Click="btnHelp_Click"></MenuItem>
+        </Menu>
         <DockPanel Grid.Row="1">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">

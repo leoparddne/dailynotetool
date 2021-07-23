@@ -6,11 +6,11 @@
     <Grid>
         <DockPanel>
             <StackPanel Margin="50 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="Version: " />
                     <TextBlock x:Name="txtVer" />
                 </StackPanel>
-                <Image Source="/daily.ico" Width="100" Height="100"/>
+                <Image Source="/daily.ico" Width="100" Height="100" HorizontalAlignment="Center"/>
             </StackPanel>
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">

@@ -18,7 +18,7 @@ namespace DailyNote.Util
             }
         }
 
-        private List<Config> configs= new();
+        private List<Config> configs = new();
 
         public ConfigUtil()
         {
@@ -36,6 +36,7 @@ namespace DailyNote.Util
 
         public Config Add(DateTime day)
         {
+            Backup();
             var result = new Config(day);
             configs.Add(result);
 
@@ -43,11 +44,21 @@ namespace DailyNote.Util
             return result;
         }
 
+        public void Backup()
+        {
+            if (configs.Count < 100)
+            {
+                return;
+            }
+            File.Move(configFile, $"{configs.First().Key}_{configs.Last().Key}.cfg");
+            configs = new();
+        }
+
         public Config GetConfigOfDay(DateTime day)
         {
             var key = day.ToString("yyyyMMdd");
             var result = configs?.FirstOrDefault(f => f.Key.Trim() == key.Trim());
-         
+
             return result;
         }
         //文件过大备份

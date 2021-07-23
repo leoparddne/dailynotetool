@@ -10,12 +10,25 @@ namespace DailyNote.Util
 {
     public class ConfigUtil
     {
+        string dir = "runningConfig";
         public string configFile
         {
             get
             {
-                return "dailynote.cfg";
+                string targetDir = GetTargetPath();
+                return targetDir + "/dailynote.cfg";
             }
+        }
+
+        private string GetTargetPath()
+        {
+            string targetDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dir);
+            if (!Directory.Exists(targetDir))
+            {
+                Directory.CreateDirectory(targetDir);
+            }
+
+            return targetDir;
         }
 
         private List<Config> configs = new();
@@ -50,7 +63,7 @@ namespace DailyNote.Util
             {
                 return;
             }
-            File.Move(configFile, $"{configs.First().Key}_{configs.Last().Key}.cfg");
+            File.Move(configFile, GetTargetPath()+ $"\\{configs.First().Key}_{configs.Last().Key}.cfg");
             configs = new();
         }
 

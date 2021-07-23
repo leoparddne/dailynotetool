@@ -108,7 +108,7 @@ namespace DailyNote
             txtAllNote.Text = log.GetDailyNotes();
         }
 
-        private void txtAllNote_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void clipCopy(object sender, MouseButtonEventArgs e)
         {
             //有日志文件,读取复制到剪贴板
             txtAllNote.Text = log.GetDailyNotes();

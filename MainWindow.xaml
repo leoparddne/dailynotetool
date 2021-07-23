@@ -9,9 +9,9 @@
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="当日工作开始时间:" VerticalAlignment="Center"/>
-                    <ComboBox Name="cobHour"/>
+                    <ComboBox Name="cobHour" SelectedIndex="0"/>
                     <TextBlock Text=":" VerticalAlignment="Center"/>
-                    <ComboBox Name="cobMinute"/>
+                    <ComboBox Name="cobMinute" SelectedIndex="0" />
                     <Button Click="btnResetFromSelectTime_Click" Width="200" Height="30" Content="重置开始时间"/>
                 </StackPanel>
                 <TextBox  x:Name="txtWork" Height="65" />
@@ -26,8 +26,9 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="日志:(双击日志区域复制)" Margin="5" MouseLeftButtonDown="txtAllNote_MouseDoubleClick"/>
-                <TextBox Grid.Row="1" AcceptsReturn="True" IsEnabled="False" Name="txtAllNote" MouseDoubleClick="txtAllNote_MouseDoubleClick" ToolTip="双击复制"/>
+                <TextBlock Text="日志:(点击此处复制)" Foreground="Red" Margin="5" MouseLeftButtonDown="clipCopy"/>
+                <TextBox Grid.Row="1" AcceptsReturn="True" IsEnabled="False" Name="txtAllNote"
+                         />
             </Grid>
         </DockPanel>
     </Grid>

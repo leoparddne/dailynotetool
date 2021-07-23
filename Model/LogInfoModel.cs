@@ -18,7 +18,12 @@ namespace DailyNote.Model
         {
             get
             {
-                return (EndTime - StartTime).TotalHours;
+                var time = Math.Round((EndTime - StartTime).TotalHours, 1);
+                if (time == 0)
+                {
+                    time = 0.1;
+                }
+                return time;
             }
         }
 

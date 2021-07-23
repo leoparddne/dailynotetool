@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace DailyNote.Util
@@ -21,7 +19,7 @@ namespace DailyNote.Util
         {
             get
             {
-                return "dailynote_" + StartTimeOfDay.ToString("yyyyMMdd");
+                return "dailynote_test" + StartTimeOfDay.ToString("yyyyMMdd" )+ ".txt";
             }
         }
 
@@ -31,18 +29,26 @@ namespace DailyNote.Util
         public List<LogInfoModel> LogInfos { get; set; } = new List<LogInfoModel>();
 
 
-        public void AddLog()
+        public void AddLog(string log)
         {
             if (LogInfos.Count == 0)
             {
                 lastTime = StartTimeOfDay;
             }
-
-            LogInfos.Add(new LogInfoModel
+            var logInfo = new LogInfoModel
             {
                 StartTime = lastTime,
-                EndTime = DateTime.Now
-            });
+                EndTime = DateTime.Now,
+                Log = log
+            };
+            LogInfos.Add(logInfo);
+
+            FileInfo file = new FileInfo(logFile);
+            var writer = file.AppendText();
+            writer.WriteLine(GetLogLine(logInfo));
+
+            writer.Close();
+            lastTime = logInfo.EndTime;
         }
 
         public void ReSet(DateTime firstTimeOfDay)
@@ -91,6 +97,13 @@ namespace DailyNote.Util
             }
 
             File.WriteAllText(logFile, builder.ToString());
+        }
+
+        private string GetLogLine(LogInfoModel logInfo)
+        {
+            var result = $"{logInfo.Log}{blandStr}{logInfo.Hours}{EndStr}";
+
+            return result;
         }
 
         public void Copy()

@@ -56,7 +56,7 @@ namespace DailyNote
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             var appendText = txtWork.Text.Trim();
-
+            log.AddLog(appendText);
             //添加新日志数据
             if (appendText != null && appendText != string.Empty)
             {

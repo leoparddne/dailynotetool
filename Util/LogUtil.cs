@@ -68,7 +68,7 @@ namespace DailyNote.Util
             if (LogInfos.Count != 0)
             {
                 var firstData = LogInfos.First();
-                if (firstTimeOfDay < firstData.EndTime)
+                if (firstTimeOfDay > firstData.EndTime)
                 {
                     MessageBox.Show($"开始时间不得大于第一条记录的结束时间,结束时间为{firstData.EndTime.ToShortTimeString()}");
                     return;

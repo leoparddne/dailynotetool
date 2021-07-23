@@ -29,8 +29,6 @@ namespace DailyNote.Windows
             }
             File.ReadAllText(readmePath);
             txtTips.Text = File.ReadAllText(readmePath);
-            txtTips.Text += File.ReadAllText(readmePath);
-
         }
     }
 

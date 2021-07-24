@@ -32,6 +32,7 @@ namespace DailyNote
                 txtAllNote.AppendText($"{logStr}\n");
                 //清空数据
                 txtWork.Text = "";
+                this.Title = log.Title;
             }
             catch (Exception ex)
             {

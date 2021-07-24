@@ -21,7 +21,6 @@
                     <hc:TimePicker ShowClearButton="True" Name="timePicker" Width="200" Margin="20 10"/>
 
                     <Button Click="btnResetFromSelectTime_Click" Width="200" Height="30" Content="重置开始时间" />
-                    <Button Content="开始时间重置为系统时间" Margin="10 0" Width="200" Height="30" Name="btnReset" Click="btnReset_Click" />
                 </StackPanel>
                 <TextBox x:Name="txtWork" Height="65" ToolTip="请输入工作事项" />
             </StackPanel>
@@ -36,10 +35,12 @@
                 <TextBlock Text="日志:(点击此处复制或在生成的日志数据框中右键复制)" Foreground="Red" Margin="5" MouseLeftButtonDown="clipCopy" />
                 <TextBox Grid.Row="1" AcceptsReturn="True" IsEnabled="False"
                          ContextMenuService.ShowOnDisabled="True" VerticalAlignment="Stretch" VerticalContentAlignment="Top"
-                        Name="txtAllNote">
+                        Name="txtAllNote" ToolTip="右键进行更多操作" ToolTipService.ShowOnDisabled="True">
                     <TextBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="复制" Name="txtCopy" Click="txtCopy_Click"/>
+                            <MenuItem Header="撤销最后一条记录" Name="btnRevert" Click="btnRevert_Click"/>
+
                         </ContextMenu>
                     </TextBox.ContextMenu>
                 </TextBox>

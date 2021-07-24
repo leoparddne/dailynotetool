@@ -62,7 +62,7 @@ namespace DailyNote.Util
         /// </summary>
         public List<LogInfoModel> LogInfos { get; set; } = new List<LogInfoModel>();
 
-        private ConfigUtil configUtile = new ConfigUtil();
+        private ConfigUtil configUtil = new ConfigUtil();
 
         public LogUtil()
         {
@@ -123,15 +123,40 @@ namespace DailyNote.Util
             }
 
             StartTimeOfDay = firstTimeOfDay;
-            var config = configUtile.GetConfigOfDay(StartTimeOfDay);
+            var config = configUtil.GetConfigOfDay(StartTimeOfDay);
             if (config != null)
             {
-                configUtile.Modify(config, firstTimeOfDay);
+                configUtil.Modify(config, firstTimeOfDay);
             }
             Save();
 
             //LogInfos.Clear();
             //Load();
+        }
+
+        /// <summary>
+        /// 撤销最后一条
+        /// </summary>
+        public void RevertLast()
+        {
+            if ((LogInfos?.Count ?? 0) == 0)
+            {
+                return;
+            }
+            LogInfos.Remove(LogInfos.Last());
+
+            
+
+            if ((LogInfos?.Count ?? 0) > 0)
+            {
+                lastTime = LogInfos.Last().EndTime;
+            }
+            else
+            {
+                lastTime = StartTimeOfDay;
+            }
+            
+            Save();
         }
 
         public void Load()
@@ -185,10 +210,10 @@ namespace DailyNote.Util
 
         private Config GetConfigOfDay()
         {
-            var config = configUtile.GetConfigOfDay(StartTimeOfDay);
+            var config = configUtil.GetConfigOfDay(StartTimeOfDay);
             if (config == null)
             {
-                config = configUtile.Add(StartTimeOfDay);
+                config = configUtil.Add(StartTimeOfDay);
             }
 
             return config;
@@ -196,10 +221,6 @@ namespace DailyNote.Util
 
         public void Save()
         {
-            if ((LogInfos?.Count ?? 0) == 0)
-            {
-                return;
-            }
             StringBuilder builder = new StringBuilder();
 
             foreach (var item in LogInfos)

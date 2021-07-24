@@ -61,7 +61,7 @@ namespace DailyNote
         }
         private void btnResetFromSelectTime_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("是否确认重置时间", "提示", MessageBoxButton.YesNo);
+            var result = MessageBox.Show("是否确认重置时间? p.s. 重置操作仅修改第一条记录的开始时间", "提示", MessageBoxButton.YesNo);
             if (result != MessageBoxResult.Yes)
             {
                 return;
@@ -108,6 +108,18 @@ namespace DailyNote
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
             new AboutWindow().ShowDialog();
+        }
+
+        private void btnRevert_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("是否确认撤销最后一条记录?", "提示", MessageBoxButton.YesNo);
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            log.RevertLast();
+            Copy();
         }
     }
 }

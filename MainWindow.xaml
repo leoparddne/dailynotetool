@@ -4,16 +4,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:DailyNote"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d" Title="日志工具"
-        Height="450" Width="800" Loaded="Window_Loaded">
+        Height="450" Width="840" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu x:Name="menu" Height="23" VerticalAlignment="Top"  >
+        <Menu x:Name="menu" Height="auto" VerticalAlignment="Top"  >
             <MenuItem Header="帮助" Name="btnHelp"  Click="btnHelp_Click"></MenuItem>
         </Menu>
-        <DockPanel Grid.Row="1">
+        <DockPanel Grid.Row="1" Margin="20 0">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="当日工作开始时间:" VerticalAlignment="Center" />
@@ -35,7 +35,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="日志:(点击此处复制或在生成的日志数据框中右键复制)" Foreground="Red" Margin="5" MouseLeftButtonDown="clipCopy" />
                 <TextBox Grid.Row="1" AcceptsReturn="True" IsEnabled="False"
-                         ContextMenuService.ShowOnDisabled="True"
+                         ContextMenuService.ShowOnDisabled="True" VerticalAlignment="Stretch" VerticalContentAlignment="Top"
                         Name="txtAllNote">
                     <TextBox.ContextMenu>
                         <ContextMenu>

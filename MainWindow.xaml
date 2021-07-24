@@ -3,30 +3,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:DailyNote"
         xmlns:hc="https://handyorg.github.io/handycontrol"
-        xmlns:Metro="clr-namespace:AduSkin.Controls.Metro;assembly=AduSkin" mc:Ignorable="d" Title="日志工具"
+        mc:Ignorable="d" Title="日志工具"
         Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu x:Name="menu" Height="23" VerticalAlignment="Top"  Margin="0 0 0 10">
+        <Menu x:Name="menu" Height="23" VerticalAlignment="Top"  >
             <MenuItem Header="帮助" Name="btnHelp"  Click="btnHelp_Click"></MenuItem>
         </Menu>
         <DockPanel Grid.Row="1">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="当日工作开始时间:" VerticalAlignment="Center" />
-                    <Metro:AduTimePicker BorderBrush="Transparent" Width="200" Margin="20 0 0 0"
-                            Name="timePicker" />
                     
+                    <hc:TimePicker ShowClearButton="True" Name="timePicker" Width="200" Margin="20 10"/>
+
                     <Button Click="btnResetFromSelectTime_Click" Width="200" Height="30" Content="重置开始时间" />
                     <Button Content="开始时间重置为系统时间" Margin="10 0" Width="200" Height="30" Name="btnReset" Click="btnReset_Click" />
                 </StackPanel>
                 <TextBox x:Name="txtWork" Height="65" ToolTip="请输入工作事项" />
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                <Button Content="新增记录" Height="50" Name="btnOK" Click="btnOK_Click" IsDefault="True" />
+                <Button Content="新增记录" Height="50" HorizontalAlignment="Stretch" Margin="10" Name="btnOK" Click="btnOK_Click" IsDefault="True" />
             </StackPanel>
             <Grid>
                 <Grid.RowDefinitions>

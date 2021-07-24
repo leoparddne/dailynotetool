@@ -1,8 +1,6 @@
-﻿using DailyNote.Model;
-using DailyNote.Util;
+﻿using DailyNote.Util;
 using DailyNote.Windows;
 using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 

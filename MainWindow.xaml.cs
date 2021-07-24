@@ -120,6 +120,8 @@ namespace DailyNote
 
             log.RevertLast();
             Copy();
+
+            SyncTitle();
         }
     }
 }

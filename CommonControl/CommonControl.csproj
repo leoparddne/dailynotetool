@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Img\icon_cancel_rest@2x.png" />
+    <None Remove="Img\icon_cancel_selected@2x.png" />
+    <None Remove="Img\icon_close_popup_gray.png" />
+    <None Remove="Img\icon_copy_rest@2x.png" />
+    <None Remove="Img\icon_copy_selected@2x.png" />
+    <None Remove="Img\icon_yidong_rest@2x.png" />
+    <None Remove="Img\icon_yidong_selected@2x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Img\icon_cancel_rest@2x.png" />
+    <Resource Include="Img\icon_cancel_selected@2x.png" />
+    <Resource Include="Img\icon_close_popup_gray.png" />
+    <Resource Include="Img\icon_copy_rest@2x.png" />
+    <Resource Include="Img\icon_copy_selected@2x.png" />
+    <Resource Include="Img\icon_yidong_rest@2x.png" />
+    <Resource Include="Img\icon_yidong_selected@2x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Img\btn_close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\btn_xuanzhuan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Control\Mask\Mask.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Control\Toast\Toast.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Themes\Generic.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
+</Project>

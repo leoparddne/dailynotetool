@@ -1,0 +1,24 @@
+﻿<Window x:Class="LYXUI.Control.Toast.Toast" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LYXUI.Control.Toast" ResizeMode="NoResize" mc:Ignorable="d" WindowStyle="None"
+        Background="Transparent" WindowStartupLocation="Manual" Title="Toast" Closed="Window_Closed"
+         BorderBrush="Transparent" BorderThickness="0"
+        AllowsTransparency="True" ShowInTaskbar="False" ShowActivated="False">
+    <DockPanel Width="auto" Height="auto" LastChildFill="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Path x:Name="icoTop" Data="M0 6 l 12 0 L 6 0 z" Fill="Black" Stroke="Black" DockPanel.Dock="Top"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding TopIcoVisibility}" />
+        <Path x:Name="icoBottom" Data="M0 0 l 12 0 L 6 6 z" Fill="Black" Stroke="Black" DockPanel.Dock="Bottom"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding BottomIcoVisibility}" />
+        <Path x:Name="icoLeft" Data="M6 0 l 0 12 L 0 6" Fill="Black" Stroke="Black" DockPanel.Dock="Left"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding LeftIcoVisibility}" />
+        <Path x:Name="icoRight" Data="M0 0 l 0 12 L 6 6" Fill="Black" Stroke="Black" DockPanel.Dock="Right"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding RightIcoVisibility}" />
+        <Border Name="mainContainer" Background="Black" Margin="0" CornerRadius="8">
+            <TextBlock Margin="24 9" x:Name="txtInfo" Text="" Foreground="White" HorizontalAlignment="Center"
+                    Width="auto" Height="auto" Background="Transparent" FontSize="16" VerticalAlignment="Center"
+                    SizeChanged="txtInfo_SizeChanged" />
+        </Border>
+    </DockPanel>
+</Window>

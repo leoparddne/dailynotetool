@@ -1,0 +1,10 @@
+﻿<Window x:Class="LYXUI.Control.Mask.Mask" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" WindowStyle="None"
+        xmlns:local="clr-namespace:LYXUI.Control.Mask" mc:Ignorable="d" AllowsTransparency="True" Title="Mask"
+        Height="450" Width="800" Background="Transparent" Activated="Window_Activated"
+        Closed="Window_Closed" IsVisibleChanged="Window_IsVisibleChanged">
+    <Grid Background="#7F000000" MouseDown="container_MouseDown" Name="container">
+    </Grid>
+</Window>

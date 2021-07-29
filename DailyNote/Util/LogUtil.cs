@@ -79,6 +79,7 @@ namespace DailyNote.Util
             if (LogInfos.Count == 0)
             {
                 lastTime = StartTimeOfDay;
+                //提醒是否打卡
             }
 
             var logInfo = new LogInfoModel

@@ -1,4 +1,5 @@
 ﻿using DailyNote.Model;
+using LYXUI.Control.Toast;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -79,6 +80,8 @@ namespace DailyNote.Util
             if (LogInfos.Count == 0)
             {
                 lastTime = StartTimeOfDay;
+                Window mainwin = Application.Current.MainWindow;
+                Toast.MakeToast("当日第一次添加记录，请注意二次确认是否已打上班卡!", mainwin, LYXUI.Control.Toast.Enum.ToastDuringEnum.LONG);
                 //提醒是否打卡
             }
 
@@ -146,7 +149,7 @@ namespace DailyNote.Util
             }
             LogInfos.Remove(LogInfos.Last());
 
-            
+
 
             if ((LogInfos?.Count ?? 0) > 0)
             {
@@ -156,7 +159,7 @@ namespace DailyNote.Util
             {
                 lastTime = StartTimeOfDay;
             }
-            
+
             Save();
         }
 

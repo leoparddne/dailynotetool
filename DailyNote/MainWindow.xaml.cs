@@ -20,6 +20,8 @@ namespace DailyNote
         public MainWindow()
         {
             InitializeComponent();
+
+            SyncTitle();
         }
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
@@ -42,6 +44,8 @@ namespace DailyNote
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             timePicker.SelectedTime = log.GetStartTime();
+            lastTime.SelectedTime = timePicker.SelectedTime;//结束时间初始化
+
             txtAllNote.Text = log.GetDailyNotes();
             SyncTitle();
         }
@@ -122,6 +126,24 @@ namespace DailyNote
             Copy();
 
             SyncTitle();
+        }
+
+        private void btnResetLastEndTime_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("是否确认重置时间? p.s. 重置操作仅修改第后一条记录的结束时间", "提示", MessageBoxButton.YesNo);
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+            var data = DateTime.Now;
+
+            //重置时间
+            var endTime = new DateTime(data.Year, data.Month, data.Day,
+                lastTime.SelectedTime.Value.Hour, lastTime.SelectedTime.Value.Minute, lastTime.SelectedTime.Value.Second);
+            log.ReSetEndTime(endTime);
+            SyncTitle();
+
+            //txtAllNote.Text = log.GetDailyNotes();
         }
     }
 }

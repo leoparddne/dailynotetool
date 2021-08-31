@@ -18,6 +18,8 @@ namespace DailyNote.Util
 
         DateTime lastTime;
 
+        DateTime maxLastTime;//保存最大结束时间
+
         string dir = "logs";
 
         string logFile
@@ -99,7 +101,7 @@ namespace DailyNote.Util
             writer.WriteLine(lineStr);
 
             writer.Close();
-            lastTime = logInfo.EndTime;
+            maxLastTime = lastTime = logInfo.EndTime;
 
             SaveRawData();
 
@@ -138,6 +140,32 @@ namespace DailyNote.Util
             //Load();
         }
 
+        public void ReSetEndTime(DateTime endTime)
+        {
+            if (!LogInfos.Any())
+            {
+                MessageBox.Show($"当前日志无数据,无法调整");
+                return;
+            }
+
+            var lastData = LogInfos.Last();
+
+            if (endTime > maxLastTime)
+            {
+                MessageBox.Show($"开始时间不得大于最后一条记录的结束时间{maxLastTime:HH:mm:ss}");
+                return;
+            }
+
+
+            //更新记录时间
+            lastData.EndTime = lastTime = endTime;
+
+            Save();
+
+            //LogInfos.Clear();
+            //Load();
+        }
+
         /// <summary>
         /// 撤销最后一条
         /// </summary>
@@ -153,11 +181,11 @@ namespace DailyNote.Util
 
             if ((LogInfos?.Count ?? 0) > 0)
             {
-                lastTime = LogInfos.Last().EndTime;
+                maxLastTime = LogInfos.Last().EndTime;
             }
             else
             {
-                lastTime = StartTimeOfDay;
+                maxLastTime = lastTime = StartTimeOfDay;
             }
 
             Save();
@@ -193,7 +221,7 @@ namespace DailyNote.Util
             }
 
             LogInfos = JsonConvert.DeserializeObject<List<LogInfoModel>>(strData);
-            lastTime = LogInfos.Last().EndTime;
+            maxLastTime = lastTime = LogInfos.Last().EndTime;
             //foreach (var line in File.ReadAllLines(logFile))
             //{
             //    var data = line.Split(" ");

@@ -156,10 +156,14 @@ namespace DailyNote.Util
                 return;
             }
 
+            if(endTime< lastData.StartTime)
+            {
+                MessageBox.Show($"开始时间不得大于最后一条记录的开始时间{lastData.StartTime:HH:mm:ss}");
+                return;
+            }
 
             //更新记录时间
-            lastData.EndTime = lastTime = endTime;
-
+            maxLastTime=lastData.EndTime = lastTime = endTime;
             Save();
 
             //LogInfos.Clear();
